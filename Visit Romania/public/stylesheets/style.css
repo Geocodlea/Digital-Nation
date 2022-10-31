@@ -1,0 +1,52 @@
+.mask-custom {
+  backdrop-filter: blur(2px);
+  background-color: rgba(79,79,79,0.65);
+}
+
+section {
+  padding: 2rem;
+}
+
+@media screen and (min-width: 600px) {
+  section {
+    padding: 2rem 3rem;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  section {
+    padding: 2rem 5rem;
+  }
+}
+
+#categories {
+  background-image: linear-gradient(#ffffff, #919191);
+}
+
+#last-places-inserted, #forms {
+  background-image: linear-gradient(#919191, #ffffff);
+}
+
+.card-space {
+  margin-bottom: 1rem;
+}
+
+textarea {
+  height: 10rem;
+}
+
+.error-block{
+  top: 100%;
+    left: 0px;
+    color: #dc3545;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.success-block{
+  top: 100%;
+    left: 0px;
+    color: #26a652;
+    font-weight: bold;
+    margin-top: 5px;
+}
