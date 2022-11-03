@@ -1,4 +1,4 @@
-<%- include('./header') %>
+<%- include('./partials/header') %>
 
 <div class="bg-image">
   <img id="imgPlace"
@@ -14,12 +14,11 @@
 </div>
 
 <section id="categories" class="pt-5">
-  <p id="descriptionPlace">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse condimentum consectetur dui, nec sagittis ex consectetur eget. Mauris urna ex, commodo eu porttitor vel, bibendum a leo. Fusce vehicula condimentum nisi, quis dignissim est ullamcorper accumsan. Etiam eget leo ullamcorper, pellentesque turpis consectetur, ullamcorper turpis. Nulla vitae quam vehicula, feugiat felis non, volutpat libero. Mauris a tellus eget dui consectetur egestas. Phasellus sit amet consectetur erat.<br>
-  Duis lorem nulla, facilisis non ex in, aliquet eleifend leo. Praesent placerat ultricies nibh, id ornare mauris finibus nec. Nunc pulvinar non massa sit amet dictum. Quisque scelerisque odio eget augue varius condimentum. Quisque nec laoreet nulla. Cras tempus, sapien ut consequat fringilla, justo diam fermentum sem, eu fringilla eros dolor nec magna. Fusce vitae maximus neque. Morbi ac gravida nunc, a auctor sapien. Donec ligula eros, pellentesque ac ante eu, euismod eleifend ex. Ut posuere ipsum lorem, quis porta lacus aliquam ut. In fermentum dignissim ipsum.</p>
+  <p id="descriptionPlace"><%= descriptionPlace %></p>
   <p class="text-end"><%= datePlace %></p>
 </section>
 
-<script>const title = "<%= titlePlace %>"</script>
+<script>const titlePlace = "<%= titlePlace %>"</script>
 
 <section id="forms">
   <div class="d-flex flex-wrap justify-content-around">
@@ -46,4 +45,4 @@
 </section>
 
 <script><%- include('../public/javascripts/place.js') %></script>
-<%- include('./footer') %>
+<%- include('./partials/footer') %>

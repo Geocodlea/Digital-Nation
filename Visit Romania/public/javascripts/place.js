@@ -4,11 +4,6 @@ $("#editPlaceBtn").click(function (e) {
   console.log("clicked editPlaceBtn");
 });
 
-// delete place
-$("#deletePlaceBtn").click(function (e) {
-  console.log("clicked deletePlaceBtn");
-});
-
 // edit on place
 $("#editPlaceForm").submit(function (e) {
   e.preventDefault();
@@ -20,7 +15,12 @@ $("#editPlaceForm").submit(function (e) {
   const description = $("#description").val();
   const file = $("#img")[0].files[0];
 
+  let date = new Date().toDateString().split(" ");
+  date = `Edited: ${date[2]} ${date[1]} ${date[3]}`;
+
   let formData = new FormData();
+  formData.append("place", titlePlace);
+  formData.append("date", date);
 
   if (title) {
     formData.append("title", title);
@@ -40,18 +40,9 @@ $("#editPlaceForm").submit(function (e) {
       contentType: false,
       data: formData,
       success: function (data) {
-        console.log(data.result);
-        if (data.result.title) {
-          $("#titlePlace").text(data.result.title);
-        }
-        if (data.result.description) {
-          $("#descriptionPlace").text(data.result.description);
-        }
-        if (data.result.img) {
-          $("#imgPlace").attr("src", "/images/places/" + data.result.img);
-        }
+        console.log(data);
         $("#formResponse").append(
-          '<div class="success-block">Update successful</div>'
+          '<div class="success-block">Update successfully</div>'
         );
       },
       error: function (err) {
@@ -64,11 +55,9 @@ $("#editPlaceForm").submit(function (e) {
       '<div class="error-block">All fields are empty</div>'
     );
   }
-
-  console.log("submited");
 });
 
-// delete category
+// delete place
 $("#deletePlaceBtn").click(function (e) {
   e.preventDefault();
 
@@ -78,16 +67,8 @@ $("#deletePlaceBtn").click(function (e) {
   $.ajax({
     method: "DELETE",
     url: "/category/place",
-    data: { title },
-    success: function (data) {
-      console.log(data);
-      $("#deleteFormResponse").append(
-        '<div class="success-block">Delete successful</div>'
-      );
-    },
-    error: function (err) {
-      console.error(err);
-      $("#deleteFormResponse").append('<div class="error-block">Error</div>');
-    },
+    data: { place: titlePlace },
+  }).done(() => {
+    window.location = "../../";
   });
 });

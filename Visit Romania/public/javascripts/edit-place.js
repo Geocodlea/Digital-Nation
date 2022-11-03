@@ -5,9 +5,9 @@ $("#selectCategory").change(function (e) {
   $("#title").removeAttr("disabled");
   $("#description").removeAttr("disabled");
   $("#img").removeAttr("disabled");
-  for (const key in titlePlace) {
+  for (const key in allPlaces) {
     if (this.value == key) {
-      titlePlace[key].map((item) => {
+      allPlaces[key].map((item) => {
         $("#selectPlace").append(`<option value="${item}">${item}</option>`);
       });
     }
@@ -27,10 +27,14 @@ $("#editPlaceForm").submit(function (e) {
   const description = $("#description").val();
   const file = $("#img")[0].files[0];
 
+  let date = new Date().toDateString().split(" ");
+  date = `Edited: ${date[2]} ${date[1]} ${date[3]}`;
+
   let formData = new FormData();
 
   formData.append("category", category);
   formData.append("place", place);
+  formData.append("date", date);
 
   if (title) {
     formData.append("title", title);
@@ -50,9 +54,9 @@ $("#editPlaceForm").submit(function (e) {
       contentType: false,
       data: formData,
       success: function (data) {
-        console.log(data.result);
+        console.log(data);
         $("#formResponse").append(
-          '<div class="success-block">Update successful</div>'
+          '<div class="success-block">Update successfully</div>'
         );
       },
       error: function (err) {

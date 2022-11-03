@@ -1,4 +1,4 @@
-<%- include('./header') %>
+<%- include('./partials/header') %>
 
 <div class="bg-image">
   <img
@@ -57,7 +57,7 @@
             <p class="card-text"><%= shortDescription[i] %></p>
           </div>
           <div class="card-footer text-center">
-            <a href="/category/<%= titleCategory[i] %>-<%= imageCategory[i] %>-<%= shortDescription[i] %>" class="btn btn-primary"><%= titleCategory[i] %></a>
+            <a href="/category/<%= idCategory[i] %>" class="btn btn-primary"><%= titleCategory[i] %></a>
           </div>
         </div>
       </div>
@@ -76,11 +76,11 @@
 
       <div class="card h-100">
         <div class="card-body">
-          <h4 class="card-title"><%= lastPlaces[i] %></h4>
+          <h4 class="card-title"><%= titlePlace[i] %></h4>
           <p class="card-text"><%= datePlace[i] %></p>
         </div>
         <div class="card-footer text-center">
-          <a href="/category/place/<%= lastPlaces[i] %>-<%= datePlace[i] %>-<%= imagePlace[i] %>" class="btn btn-primary">Details</a>
+          <a href="/category/place/<%= idPlace[i] %>" class="btn btn-primary">Details</a>
         </div>
       </div>
 
@@ -90,5 +90,5 @@
 </section>
 
 <script><%- include('../public/javascripts/add-category.js') %></script>
-<%- include('./footer') %>
+<%- include('./partials/footer.ejs') %>
 

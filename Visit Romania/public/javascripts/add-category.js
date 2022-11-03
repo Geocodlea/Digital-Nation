@@ -3,7 +3,7 @@ $("#addCategoryBtn").click(function (e) {
   console.log("clicked addCategoryBtn");
 });
 
-// submit new category
+// add new category
 $("#addCategoryForm").submit(function (e) {
   e.preventDefault();
 
@@ -32,9 +32,9 @@ $("#addCategoryForm").submit(function (e) {
       contentType: false,
       data: formData,
       success: function (data) {
-        console.log(data.result);
+        console.log(data);
         $("#formResponse").append(
-          '<div class="success-block">Added new category successful</div>'
+          '<div class="success-block">Added new category successfully</div>'
         );
       },
       error: function (err) {
@@ -43,6 +43,4 @@ $("#addCategoryForm").submit(function (e) {
       },
     });
   }
-
-  console.log("submited");
 });

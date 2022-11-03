@@ -1,4 +1,4 @@
-<%- include('./header') %>
+<%- include('./partials/header') %>
 
 <div class="bg-image">
   <img id="imgCategory"
@@ -13,21 +13,23 @@
   </div>
 </div>
 
+<script>const titleCategory = "<%= titleCategory %>"</script>
+
 <section id="categories" class="pt-5">
   <p id="descriptionCategory"><%= shortDescription %></p>
   <div class="row">
 
-    <% for (let i=0 ; i<nrPlaces  ; i++) { %>
+    <% for (let i=0 ; i<titlePlace.length ; i++) { %>
 
       <div class="col-md-4 card-space">
         <div class="card h-100">
-          <img src="/images/places/<%= imagePlace[titleCategory][i] %>" class="card-img-top" alt="<%= titlePlace[i] %>">
+          <img src="/images/places/<%= imagePlace[i] %>" class="card-img-top" alt="<%= titlePlace[i] %>">
           <div class="card-body">
             <h4 class="card-title"><%= titlePlace[i] %></h4>
             <h5 class="card-title"><%= datePlace[i] %></h5>
           </div>
           <div class="card-footer text-center">
-            <a href="/category/place/<%= titlePlace[i] %>-<%= datePlace[i] %>-<%= imagePlace[titleCategory][i] %>" class="btn btn-primary">Details</a>
+            <a href="/category/place/<%= idPlace[i] %>" class="btn btn-primary">Details</a>
           </div>
         </div>
       </div>
@@ -65,4 +67,4 @@
 </section>
 
 <script><%- include('../public/javascripts/category.js') %></script>
-<%- include('./footer') %>
+<%- include('./partials/footer') %>

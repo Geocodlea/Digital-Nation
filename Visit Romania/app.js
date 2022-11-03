@@ -3,13 +3,20 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const cors = require("cors");
 const fileUpload = require("express-fileupload");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 const indexRouter = require("./routes/index");
 const categoryRouter = require("./routes/category");
 const placeRouter = require("./routes/place");
 
 const app = express();
+
+mongoose.connect(
+  `mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}@cluster0.cr4img1.mongodb.net/?retryWrites=true&w=majority`
+);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -20,8 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
-// enable files upload
+app.use(cors());
 app.use(fileUpload());
 
 app.use("/", indexRouter);
@@ -44,5 +50,4 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-TextDecoderStream;
 module.exports = app;

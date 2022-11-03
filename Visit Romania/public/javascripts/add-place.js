@@ -6,7 +6,7 @@ $("#selectCategory").change(function (e) {
   console.log(this.value);
 });
 
-// submit new place
+// add new place
 $("#addPlaceForm").submit(function (e) {
   e.preventDefault();
 
@@ -19,7 +19,7 @@ $("#addPlaceForm").submit(function (e) {
   const file = $("#img")[0].files[0];
 
   let date = new Date().toDateString().split(" ");
-  date = `${date[2]} ${date[1]} ${date[3]}`;
+  date = `Added: ${date[2]} ${date[1]} ${date[3]}`;
 
   let formData = new FormData();
 
@@ -43,7 +43,7 @@ $("#addPlaceForm").submit(function (e) {
       success: function (data) {
         console.log(data.result);
         $("#formResponse").append(
-          '<div class="success-block">Added new place successful</div>'
+          '<div class="success-block">Added new place successfully</div>'
         );
       },
       error: function (err) {
@@ -52,6 +52,4 @@ $("#addPlaceForm").submit(function (e) {
       },
     });
   }
-
-  console.log("submited");
 });

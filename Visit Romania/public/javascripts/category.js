@@ -16,6 +16,7 @@ $("#editCategoryForm").submit(function (e) {
   const file = $("#img")[0].files[0];
 
   let formData = new FormData();
+  formData.append("category", titleCategory);
 
   if (title) {
     formData.append("title", title);
@@ -35,21 +36,9 @@ $("#editCategoryForm").submit(function (e) {
       contentType: false,
       data: formData,
       success: function (data) {
-        console.log(data.result);
-        if (data.result.title) {
-          $("#titleCategory").text(data.result.title);
-        }
-        if (data.result.description) {
-          $("#descriptionCategory").text(data.result.description);
-        }
-        if (data.result.img) {
-          $("#imgCategory").attr(
-            "src",
-            "/images/categories/" + data.result.img
-          );
-        }
+        console.log(data);
         $("#formResponse").append(
-          '<div class="success-block">Update successful</div>'
+          '<div class="success-block">Update successfully</div>'
         );
       },
       error: function (err) {
@@ -62,8 +51,6 @@ $("#editCategoryForm").submit(function (e) {
       '<div class="error-block">All fields are empty</div>'
     );
   }
-
-  console.log("submited");
 });
 
 // delete category
@@ -76,16 +63,8 @@ $("#deleteCategoryBtn").click(function (e) {
   $.ajax({
     method: "DELETE",
     url: "/category",
-    data: { title },
-    success: function (data) {
-      console.log(data);
-      $("#deleteFormResponse").append(
-        '<div class="success-block">Delete successful</div>'
-      );
-    },
-    error: function (err) {
-      console.error(err);
-      $("#deleteFormResponse").append('<div class="error-block">Error</div>');
-    },
+    data: { category: titleCategory },
+  }).done(() => {
+    window.location = "../../";
   });
 });
