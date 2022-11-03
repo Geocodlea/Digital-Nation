@@ -14,9 +14,7 @@ const placeRouter = require("./routes/place");
 
 const app = express();
 
-mongoose.connect(
-  `mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}@cluster0.cr4img1.mongodb.net/?retryWrites=true&w=majority`
-);
+mongoose.connect(`${process.env.MONGODB_URI}`);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
