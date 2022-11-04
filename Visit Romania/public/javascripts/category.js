@@ -31,11 +31,19 @@ $("#editCategoryForm").submit(function (e) {
       method: "PATCH",
       body: formData,
     })
-      .then((data) => {
-        console.log(data);
+      .then((data) => data.json())
+      .then((res) => {
         $("#formResponse").append(
           '<div class="success-block">Update successfully</div>'
         );
+        $("#titleCategory").html(res.updateCategory.title);
+        titleCategory = res.updateCategory.title;
+        $("#descriptionCategory").html(res.updateCategory.description);
+        $("#imgCategory").attr(
+          "src",
+          "../../images/categories/" + res.updateCategory.img
+        );
+        console.log(res.updateCategory);
       })
       .catch((err) => {
         console.error(err);

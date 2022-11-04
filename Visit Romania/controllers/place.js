@@ -200,7 +200,7 @@ const patchEditPlace = async (req, res) => {
     });
     result.img = file.name;
   }
-
+  console.log(req.body.place);
   let updatePlace = await Place.findOneAndUpdate(
     { title: req.body.place },
     result,
