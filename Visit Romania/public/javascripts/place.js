@@ -1,16 +1,34 @@
-// edit place
-$("#editPlaceBtn").click(function (e) {
-  $("form").removeAttr("hidden");
-  console.log("clicked editPlaceBtn");
+// put all places for the selected category in selectPlace
+$("#selectCategory").change(function (e) {
+  $("#selectPlace").html("");
+  $("#selectPlace").removeAttr("disabled");
+  $("#title").removeAttr("disabled");
+  $("#description").removeAttr("disabled");
+  $("#img").removeAttr("disabled");
+  for (const key in allPlaces) {
+    if (this.value == key) {
+      allPlaces[key].map((item) => {
+        $("#selectPlace").append(`<option value="${item}">${item}</option>`);
+      });
+    }
+  }
 });
 
-// edit on place
+$("#editPlaceBtn").click(function (e) {
+  $("form").removeAttr("hidden");
+});
+
+// edit place
 $("#editPlaceForm").submit(function (e) {
   e.preventDefault();
 
   $(".error-block").remove(); // remove the error text
   $(".success-block").remove(); // remove the succes text
 
+  let place = $("#selectPlace option:selected").val();
+  if (!place) {
+    place = titlePlace;
+  }
   const title = $("#title").val();
   const description = $("#description").val();
   const file = $("#img")[0].files[0];
@@ -19,7 +37,8 @@ $("#editPlaceForm").submit(function (e) {
   date = `Edited: ${date[2]} ${date[1]} ${date[3]}`;
 
   let formData = new FormData();
-  formData.append("place", titlePlace);
+
+  formData.append("place", place);
   formData.append("date", date);
 
   if (title) {
@@ -33,23 +52,20 @@ $("#editPlaceForm").submit(function (e) {
   }
 
   if (title || description || file) {
-    $.ajax({
+    fetch("/category/place/edit-place", {
       method: "PATCH",
-      url: "/category/place/edit-on-place",
-      processData: false,
-      contentType: false,
-      data: formData,
-      success: function (data) {
+      body: formData,
+    })
+      .then((data) => {
         console.log(data);
         $("#formResponse").append(
           '<div class="success-block">Update successfully</div>'
         );
-      },
-      error: function (err) {
+      })
+      .catch((err) => {
         console.error(err);
         $("#formResponse").append('<div class="error-block">Error</div>');
-      },
-    });
+      });
   } else {
     $("#formResponse").append(
       '<div class="error-block">All fields are empty</div>'
@@ -61,14 +77,9 @@ $("#editPlaceForm").submit(function (e) {
 $("#deletePlaceBtn").click(function (e) {
   e.preventDefault();
 
-  $(".error-block").remove(); // remove the error text
-  $(".success-block").remove(); // remove the succes text
-
-  $.ajax({
+  fetch("/category/place", {
     method: "DELETE",
-    url: "/category/place",
-    data: { place: titlePlace },
-  }).done(() => {
-    window.location = "../../";
-  });
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ place: titlePlace }),
+  }).then(() => (window.location = "../../"));
 });

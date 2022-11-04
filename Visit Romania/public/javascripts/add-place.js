@@ -3,7 +3,6 @@ $("#selectCategory").change(function (e) {
   $("#title").removeAttr("disabled");
   $("#description").removeAttr("disabled");
   $("#img").removeAttr("disabled");
-  console.log(this.value);
 });
 
 // add new place
@@ -34,22 +33,19 @@ $("#addPlaceForm").submit(function (e) {
     formData.append("img", file);
     formData.append("date", date);
 
-    $.ajax({
+    fetch("/category/place/add-place", {
       method: "POST",
-      url: "/category/place/add-place",
-      processData: false,
-      contentType: false,
-      data: formData,
-      success: function (data) {
-        console.log(data.result);
+      body: formData,
+    })
+      .then((data) => {
+        console.log(data);
         $("#formResponse").append(
           '<div class="success-block">Added new place successfully</div>'
         );
-      },
-      error: function (err) {
+      })
+      .catch((err) => {
         console.error(err);
         $("#formResponse").append('<div class="error-block">Error</div>');
-      },
-    });
+      });
   }
 });

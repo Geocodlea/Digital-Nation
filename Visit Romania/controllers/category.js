@@ -18,6 +18,7 @@ const forNavbar = async () => {
   return { idAllCategories, titleAllCategories };
 };
 
+// get category
 const getCategory = async (req, res, next) => {
   const category = await Category.findById(req.params.categoryId)
     .exec()
@@ -72,6 +73,7 @@ const getCategory = async (req, res, next) => {
   });
 };
 
+// add new category
 const postAddCategory = async (req, res, next) => {
   // retrieve the uploaded file
   const file = req.files.img;
@@ -104,6 +106,7 @@ const postAddCategory = async (req, res, next) => {
     });
 };
 
+// edit category
 const patchEditCategory = async (req, res) => {
   let result = {};
 
@@ -142,6 +145,7 @@ const patchEditCategory = async (req, res) => {
   res.json({ updateCategory });
 };
 
+// delete category
 const deleteCategory = async (req, res) => {
   const deleteCategory = await Category.deleteOne({ title: req.body.category });
   console.log(deleteCategory);

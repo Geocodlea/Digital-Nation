@@ -18,6 +18,7 @@ const forNavbar = async () => {
   return { idAllCategories, titleAllCategories };
 };
 
+// get add place
 const getAddPlace = async (req, res, next) => {
   const categories = await Category.find({}, "title")
     .sort({ _id: 1 })
@@ -45,6 +46,7 @@ const getAddPlace = async (req, res, next) => {
   });
 };
 
+// get edit place
 const getEditPlace = async (req, res, next) => {
   const categories = await Category.find({}, "title")
     .sort({ _id: 1 })
@@ -101,6 +103,7 @@ const getEditPlace = async (req, res, next) => {
   });
 };
 
+// get place
 const getPlace = async (req, res, next) => {
   const place = await Place.findById(req.params.placeId)
     .exec()
@@ -133,6 +136,7 @@ const getPlace = async (req, res, next) => {
   });
 };
 
+// add new place
 const postAddPlace = (req, res, next) => {
   // retrieve the uploaded file
   const file = req.files.img;
@@ -167,6 +171,7 @@ const postAddPlace = (req, res, next) => {
     });
 };
 
+// edit place
 const patchEditPlace = async (req, res) => {
   let result = {};
 
@@ -206,45 +211,7 @@ const patchEditPlace = async (req, res) => {
   res.json({ updatePlace });
 };
 
-const patchEditOnPlace = async (req, res) => {
-  let result = {};
-
-  result.date = req.body.date;
-  if (req.body.title) {
-    const title = req.body.title;
-    console.log(title);
-    result.title = title;
-  }
-  if (req.body.description) {
-    const description = req.body.description;
-    console.log(description);
-    result.description = description;
-  }
-  if (req.files) {
-    // retrieve the uploaded file
-    const file = req.files.img;
-    const uploadPath =
-      path.dirname(__dirname) + "/public/images/places/" + file.name;
-    console.log(uploadPath);
-
-    // use the mv() method to place the file on the server
-    file.mv(uploadPath, function (err) {
-      if (err) return res.status(500).send(err);
-      console.log("File uploaded!");
-    });
-    result.img = file.name;
-  }
-
-  let updatePlace = await Place.findOneAndUpdate(
-    { title: req.body.place },
-    result,
-    { new: true }
-  );
-  console.log(updatePlace);
-
-  res.json({ updatePlace });
-};
-
+// delete place
 const deletePlace = async (req, res) => {
   const deletePlace = await Place.deleteOne({ title: req.body.place });
   console.log(deletePlace);
@@ -258,6 +225,5 @@ module.exports = {
   getPlace,
   postAddPlace,
   patchEditPlace,
-  patchEditOnPlace,
   deletePlace,
 };

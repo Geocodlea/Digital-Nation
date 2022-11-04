@@ -13,8 +13,6 @@ router.post("/add-place", PlaceController.postAddPlace);
 
 router.patch("/edit-place", PlaceController.patchEditPlace);
 
-router.patch("/edit-on-place", PlaceController.patchEditOnPlace);
-
 router.delete("/", PlaceController.deletePlace);
 
 module.exports = router;

@@ -1,6 +1,5 @@
 $("#addCategoryBtn").click(function (e) {
   $("#addCategoryForm").removeAttr("hidden");
-  console.log("clicked addCategoryBtn");
 });
 
 // add new category
@@ -25,22 +24,19 @@ $("#addCategoryForm").submit(function (e) {
     formData.append("description", description);
     formData.append("img", file);
 
-    $.ajax({
+    fetch("/category/add-category", {
       method: "POST",
-      url: "/category/add-category",
-      processData: false,
-      contentType: false,
-      data: formData,
-      success: function (data) {
+      body: formData,
+    })
+      .then((data) => {
         console.log(data);
         $("#formResponse").append(
           '<div class="success-block">Added new category successfully</div>'
         );
-      },
-      error: function (err) {
+      })
+      .catch((err) => {
         console.error(err);
         $("#formResponse").append('<div class="error-block">Error</div>');
-      },
-    });
+      });
   }
 });

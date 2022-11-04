@@ -1,7 +1,5 @@
-// edit category
 $("#editCategoryBtn").click(function (e) {
   $("form").removeAttr("hidden");
-  console.log("clicked editCategoryBtn");
 });
 
 // edit category
@@ -29,23 +27,20 @@ $("#editCategoryForm").submit(function (e) {
   }
 
   if (title || description || file) {
-    $.ajax({
+    fetch("/category", {
       method: "PATCH",
-      url: "/category",
-      processData: false,
-      contentType: false,
-      data: formData,
-      success: function (data) {
+      body: formData,
+    })
+      .then((data) => {
         console.log(data);
         $("#formResponse").append(
           '<div class="success-block">Update successfully</div>'
         );
-      },
-      error: function (err) {
+      })
+      .catch((err) => {
         console.error(err);
         $("#formResponse").append('<div class="error-block">Error</div>');
-      },
-    });
+      });
   } else {
     $("#formResponse").append(
       '<div class="error-block">All fields are empty</div>'
@@ -57,14 +52,9 @@ $("#editCategoryForm").submit(function (e) {
 $("#deleteCategoryBtn").click(function (e) {
   e.preventDefault();
 
-  $(".error-block").remove(); // remove the error text
-  $(".success-block").remove(); // remove the succes text
-
-  $.ajax({
+  fetch("/category", {
     method: "DELETE",
-    url: "/category",
-    data: { category: titleCategory },
-  }).done(() => {
-    window.location = "../../";
-  });
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ category: titleCategory }),
+  }).then(() => (window.location = "../../"));
 });
