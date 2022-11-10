@@ -1,5 +1,7 @@
 const path = require("path");
 const mongoose = require("mongoose");
+const sharp = require("sharp");
+const fs = require("fs");
 
 const Category = require("../models/category");
 const Place = require("../models/place");
@@ -75,23 +77,16 @@ const getCategory = async (req, res, next) => {
 
 // add new category
 const postAddCategory = async (req, res, next) => {
-  // retrieve the uploaded file
-  const file = req.files.img;
-  const uploadPath =
-    path.dirname(__dirname) + "/public/images/categories/" + file.name;
-  console.log(uploadPath);
-
-  // use the mv() method to place the file on the server
-  file.mv(uploadPath, function (err) {
-    if (err) return res.status(500).send(err);
-    console.log("File uploaded!");
-  });
+  await sharp(req.file.path)
+    .resize(480, 270)
+    .toFile(path.resolve(req.file.destination, "images", req.file.filename));
+  fs.unlinkSync(req.file.path);
 
   const category = await new Category({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
     description: req.body.description,
-    img: file.name,
+    img: req.file.filename,
   });
 
   category
@@ -120,19 +115,12 @@ const patchEditCategory = async (req, res) => {
     console.log(description);
     result.description = description;
   }
-  if (req.files) {
-    // retrieve the uploaded file
-    const file = req.files.img;
-    const uploadPath =
-      path.dirname(__dirname) + "/public/images/categories/" + file.name;
-    console.log(uploadPath);
-
-    // use the mv() method to place the file on the server
-    file.mv(uploadPath, function (err) {
-      if (err) return res.status(500).send(err);
-      console.log("File uploaded!");
-    });
-    result.img = file.name;
+  if (req.file) {
+    await sharp(req.file.path)
+      .resize(480, 270)
+      .toFile(path.resolve(req.file.destination, "images", req.file.filename));
+    fs.unlinkSync(req.file.path);
+    result.img = req.file.filename;
   }
 
   let updateCategory = await Category.findOneAndUpdate(

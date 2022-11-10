@@ -65,10 +65,7 @@ $("#editPlaceForm").submit(function (e) {
         titlePlace = res.updatePlace.title;
         $("#descriptionPlace").html(res.updatePlace.description);
         $("#datePlace").html(res.updatePlace.date);
-        $("#imgPlace").attr(
-          "src",
-          "../../images/places/" + res.updatePlace.img
-        );
+        $("#imgPlace").attr("src", "../../images/" + res.updatePlace.img);
         console.log(res.updatePlace);
       })
       .catch((err) => {

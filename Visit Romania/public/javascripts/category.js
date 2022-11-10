@@ -39,10 +39,7 @@ $("#editCategoryForm").submit(function (e) {
         $("#titleCategory").html(res.updateCategory.title);
         titleCategory = res.updateCategory.title;
         $("#descriptionCategory").html(res.updateCategory.description);
-        $("#imgCategory").attr(
-          "src",
-          "../../images/categories/" + res.updateCategory.img
-        );
+        $("#imgCategory").attr("src", "../../images/" + res.updateCategory.img);
         console.log(res.updateCategory);
       })
       .catch((err) => {
