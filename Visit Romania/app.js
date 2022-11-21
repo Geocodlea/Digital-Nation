@@ -15,6 +15,9 @@ const app = express();
 
 mongoose.connect(`${process.env.MONGODB_URI}`);
 
+// default mockup
+require("./mockup");
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
